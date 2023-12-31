@@ -48,7 +48,7 @@ function ShowQr({ email_, sizeColor, sizeQr,qrCodeValue}: Props) {
         </>
       ) : (
         <div></div>
-      )}
+      )} 
     </div>
   )
 }
