@@ -120,7 +120,7 @@ function FormCard({ inputFields }: Props) {
         toast({
           variant: "success",
           title: "Generate Success",
-          description: "We've created your qr code",
+          description: "We've created a QR code",
         })
 
         setIsLoading(false)
@@ -236,7 +236,7 @@ function FormCard({ inputFields }: Props) {
             sizeQr={state.sizeQr}
             sizeColor={state.sizeColor}
             email_={state.email_}
-            qrCodeValue={state.qrCodeValue} />
+            qrCodeValue={state.qrCodeValue} style={""} />
         </div>
       </div>
     </div>

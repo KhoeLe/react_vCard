@@ -7,10 +7,11 @@ type Props = {
   sizeQr: string,
   sizeColor: string,
   email_: string,
-  qrCodeValue: string
+  qrCodeValue: string,
+  style: string
 }
 
-function ShowQr({ email_, sizeColor, sizeQr,qrCodeValue}: Props) {
+function ShowQr({ email_, sizeColor, sizeQr, qrCodeValue, style }: Props) {
 
   const qrCodeRef = useRef(null);
 
@@ -29,22 +30,22 @@ function ShowQr({ email_, sizeColor, sizeQr,qrCodeValue}: Props) {
   }
 
   return (
-    <div className='flex items-center justify-center mt-10 mb-10 '>
+    <div className={`flex items-center ${style} justify-center  mt-10 mb-10`}>
       {qrCodeValue ? (
         <>
           <div className='flex flex-col justify-center items-center mt-4 mb-4'>
-          <QRCode
-            id="QRCodeScaled"
-            size={Number(sizeQr)}
-            value={qrCodeValue}
-            fgColor={sizeColor}
-            ref={qrCodeRef}
-          />
-          <p className='text-sm mt-2 mb-2'>
-            {email_}
-          </p>
+            <QRCode
+              id="QRCodeScaled"
+              size={Number(sizeQr)}
+              value={qrCodeValue}
+              fgColor={sizeColor}
+              ref={qrCodeRef}
+            />
+            <p className='text-sm mt-2 mb-2'>
+              {email_}
+            </p>
           </div>
-          <Button onClick={handleDownloadImage} className='ml-10'>Download QR Code</Button>
+          <Button onClick={handleDownloadImage}>Download QR Code</Button>
         </>
       ) : (
         <div></div>

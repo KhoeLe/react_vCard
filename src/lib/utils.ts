@@ -23,6 +23,16 @@ export const toBase64 = (file: File) => {
   })
 }
 
+export const URLtoBase64 = (url: string) => 
+  fetch(url)
+    .then(response => response.blob())
+    .then(blob => new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result);
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    }));
+
 export async function getImageData(event: ChangeEvent<HTMLInputElement>) {
   // FileList is immutable, so we need to create a new one
   const dataTransfer = new DataTransfer()
@@ -71,7 +81,7 @@ export async function uploadedToAzure(vCardData: string, blobName: string) {
 
     const blobServiceClient = new BlobServiceClient(`https://${import.meta.env.VITE_AZURE_ACCOUNT}.blob.core.windows.net/vcard?${import.meta.env.VITE_AZURE_SAS}`)
 
-    console.log(blobServiceClient)
+    // console.log(blobServiceClient)
     // Create a unique name for the container
     const containerName = ''
 
