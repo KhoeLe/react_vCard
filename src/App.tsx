@@ -17,7 +17,7 @@ function App() {
       defaultValue: '',
     },
     {
-      label: "Upload Image",
+      label: "Upload Employee Photo",
       id: "image",
       defaultValue: '',
       type: "file"
