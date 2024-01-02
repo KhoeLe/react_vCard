@@ -150,10 +150,14 @@ function FormCard({ inputFields }: Props) {
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                 <fieldset disabled={saving}>
                   <>
-                    <Avatar className="w-32 h-32 mt-10 mb-10 ">
+                  {preview 
+                              ?  
+                  <Avatar className="w-32 h-32 mt-10 mb-10 ">
                       <AvatarImage src={preview} />
                       <AvatarFallback>Image</AvatarFallback>
-                    </Avatar>
+                  </Avatar>   : 
+                    ''
+                  }
                   </>
                   {inputFields.map((input) => (
                     <div key={input.id} className={`${input.type === "hidden" ? 'hidden' : ''}`}>
