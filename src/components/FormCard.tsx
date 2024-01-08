@@ -18,8 +18,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
 import { ContainerClient } from "@azure/storage-blob"
 import ShowQr from "./ShowQr"
 import BeatLoader from 'react-spinners/BeatLoader'
-import { toast } from "./ui/use-toast"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select"
+import { toast } from "./ui/use-toast"
 
 type Props = {
   inputFields: {
@@ -30,8 +30,6 @@ type Props = {
   }[];
 }
 
-
-
 const formSchema = z.object({
   fullName: z.string().min(2).max(50),
   image: z
@@ -41,14 +39,16 @@ const formSchema = z.object({
       (file) => ACCEPTED_IMAGE_TYPES.includes(file[0]?.type),
       "Only .jpg, .jpeg, .png and formats are supported."
     ),
-  businessTitle: z.string().min(2).max(50),
+  businessTitle: z.string().min(2).max(100),
   email: z.string().email(),
   mobilePhone: z.string().regex(phoneRegex, 'Invalid Number!'),
   // mobilePhone:z.string().regex(phoneRegex, 'Invalid Number!').optional()
   // .or(z.literal('')),
   workPhone: z.string().regex(phoneRegex, 'Invalid Number!'),
   companyName: z.string().min(2).max(50),
-  companyWebsite: z.string().url(),
+  companyWebsite: z.string().url(
+    "Please enter a valid URL. For example: https://www.keppel.com"
+  ),
   sizeQr: z.string().min(2).max(50),
   sizeColor: z.string().min(2).max(50),
 });
@@ -84,7 +84,7 @@ function FormCard({ inputFields }: Props) {
       workPhone: "",
       companyName: "",
       companyWebsite: "",
-      sizeQr: "100",
+      sizeQr: "200",
       sizeColor: "#e8072a"
 
     },
@@ -97,13 +97,15 @@ function FormCard({ inputFields }: Props) {
       setIsLoading(true)
       // Do something with the form values.
       const base64Image = base64.toString().split(',')[1];
+
+      const noWrapbusinessTitle = values.businessTitle.replace(/\n/g, "\\n");
       // build the vCard and get url
       if (base64Image) {
         const vCard = getVCardData(
           values.fullName,
           values.mobilePhone,
           values.email,
-          values.businessTitle,
+          noWrapbusinessTitle,
           base64Image,
           values.workPhone,
           values.companyWebsite,
@@ -120,11 +122,13 @@ function FormCard({ inputFields }: Props) {
         toast({
           variant: "success",
           title: "Generate Success",
-          description: "We've created your qr code",
+          description: "We've created a QR code",
         })
+
 
         setIsLoading(false)
         setSaving(false)
+        window.scrollTo(0, 0)
 
       }
     } catch (error) {
@@ -160,7 +164,7 @@ function FormCard({ inputFields }: Props) {
                   }
                   </>
                   {inputFields.map((input) => (
-                    <div key={input.id} className={`${input.type === "hidden" ? 'hidden' : ''}`}>
+                    <div key={input.id} className={`${input.type === "hidden" ? 'hidden' : ''} mt-5 mb-5`}>
                       <FormField
                         control={form.control}
                         name={input.id as InputFieldId}
@@ -195,9 +199,9 @@ function FormCard({ inputFields }: Props) {
                                           </SelectTrigger>
                                         </FormControl>
                                         <SelectContent>
-                                          <SelectItem value="100">100</SelectItem>
-                                          <SelectItem value="200">200</SelectItem>
-                                          <SelectItem value="300">300</SelectItem>
+                                          <SelectItem value="100">100x100</SelectItem>
+                                          <SelectItem value="200">200x200</SelectItem>
+                                          <SelectItem value="300">300x300</SelectItem>
                                         </SelectContent>
                                       </Select>
                                       : input.type === "selectColor"
@@ -234,14 +238,14 @@ function FormCard({ inputFields }: Props) {
             </Form>
           </div>
         </div>
-        <div className="flex items-center justify-center">
-          <BeatLoader color='#10B981' loading={isLoading} size={24} />
-          <ShowQr
-            sizeQr={state.sizeQr}
-            sizeColor={state.sizeColor}
-            email_={state.email_}
-            qrCodeValue={state.qrCodeValue} />
-        </div>
+      </div>
+      <div className="flex">
+        <BeatLoader color='#10B981' loading={isLoading} size={24} />
+        <ShowQr
+          sizeQr={state.sizeQr}
+          sizeColor={state.sizeColor}
+          email_={state.email_}
+          qrCodeValue={state.qrCodeValue} style={""} />
       </div>
     </div>
   )
