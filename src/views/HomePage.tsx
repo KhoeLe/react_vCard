@@ -1,6 +1,6 @@
 import FormCard from "@components/FormCard"
-import { Button } from "@components/ui/button"
-import { NavLink } from "react-router-dom"
+// import { Button } from "@components/ui/button"
+// import { NavLink } from "react-router-dom"
 
 function HomePage() {
   const inputFields = [
@@ -48,7 +48,7 @@ function HomePage() {
       id: "companyWebsite",
       defaultValue: '',
     }, {
-      label: "Qr Size",
+      label: "QR Code Size",
       id: "sizeQr",
       defaultValue: '',
       type: "selectSize"
@@ -61,14 +61,14 @@ function HomePage() {
   ]
 
   return (
-    <div className="container mx-auto py-10">
-      <div className="flex flex-row-reverse mt-2 mb-2">
-        <NavLink to='/admin-page'>
+    <div className="container mx-auto">
+      {/* <div className="flex flex-row-reverse mt-2 mb-2">
+        <NavLink to='/admin-page.htm'>
           <Button>
             Admin Page
           </Button>
         </NavLink>
-      </div>
+      </div> */}
 
       <FormCard inputFields={inputFields} />
     </div>

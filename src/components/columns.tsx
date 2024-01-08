@@ -2,6 +2,7 @@
 
 import { ColumnDef } from "@tanstack/react-table"
 import GenQr from "./GenQr"
+// import UploadImage from "./UploadImage"
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -52,14 +53,11 @@ export const columns: ColumnDef<vCard>[] = [
     accessorKey: "image",
     header: "Employee Image",
     cell: (row) => {
+      console.log(row)
       return (
-        <div className="flex items-center">
-          <img
-            className="h-12 w-12 rounded-full"
-            src={row.getValue() as unknown as string}
-            alt=""
-          />
-        </div>
+      //  <UploadImage  />
+      <>
+      </>
       )
     },
   },

@@ -103,26 +103,3 @@ export async function uploadedToAzure(vCardData: string, blobName: string) {
     console.error(`Failed to upload blob: ${error}`)
   }
 }
-
-
-// export function displayQRCode (fileUrl: string) {
-//   const qrCode = new QRCodeStyling({
-//     width: 300,
-//     height: 300,
-//     data: fileUrl,
-//     image: 'https://www.vcard.link/assets/images/vcard-logo.png',
-//     dotsOptions: {
-//       color: '#000000',
-//       type: 'square',
-//     },
-//     backgroundOptions: {
-//       color: '#ffffff',
-//     },
-//     imageOptions: {
-//       crossOrigin: 'anonymous',
-//       margin: 20,
-//     },
-//   })
-
-//   qrCode.append(document.getElementById('qrcode'))
-// }

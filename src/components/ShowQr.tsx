@@ -30,11 +30,12 @@ function ShowQr({ email_, sizeColor, sizeQr, qrCodeValue, style }: Props) {
   }
 
   return (
-    <div className={`flex items-center ${style} justify-center  mt-10 mb-10`}>
+    <div className={`flex ${style} justify-center  mt-72 `}>
       {qrCodeValue ? (
         <>
-          <div className='flex flex-col justify-center items-center mt-4 mb-4'>
+          <div className='flex flex-col '>
             <QRCode
+            className=''
               id="QRCodeScaled"
               size={Number(sizeQr)}
               value={qrCodeValue}
@@ -44,8 +45,9 @@ function ShowQr({ email_, sizeColor, sizeQr, qrCodeValue, style }: Props) {
             <p className='text-sm mt-2 mb-2'>
               {email_}
             </p>
+            <Button className='mt-2 mb-2' onClick={handleDownloadImage}>Download QR Code</Button>
           </div>
-          <Button onClick={handleDownloadImage}>Download QR Code</Button>
+         
         </>
       ) : (
         <div></div>

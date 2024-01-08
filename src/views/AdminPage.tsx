@@ -32,7 +32,7 @@ function AdminPage() {
   }
 
   return (
-    <div className="container mx-auto py-10">
+    <div className="container mx-auto">
       <div className="flex flex-row-reverse mt-2 mb-2">
         <NavLink to='/'>
           <Button>

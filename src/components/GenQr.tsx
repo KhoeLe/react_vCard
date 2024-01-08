@@ -48,6 +48,7 @@ function GenQr({ data }: Props) {
         setIsLoading(false)
       }
     } catch (error) {
+      console.log(error)
       toast({
         variant: "destructive",
         title: "Generate Failed",
@@ -72,7 +73,6 @@ function GenQr({ data }: Props) {
           sizeColor={"#e8072a"}
           email_={data.email as string}
           qrCodeValue={qrCodeValue} />
-
       </div>
 
     </div>
