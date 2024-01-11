@@ -245,7 +245,7 @@ function FormCard({ inputFields }: Props) {
           sizeQr={state.sizeQr}
           sizeColor={state.sizeColor}
           email_={state.email_}
-          qrCodeValue={state.qrCodeValue} style={""} />
+          qrCodeValue={state.qrCodeValue} style={"mt-72"} />
       </div>
     </div>
   )
