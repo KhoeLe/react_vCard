@@ -1,45 +1,73 @@
-// import { SetStateAction, useState } from 'react';
-// import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
-// import { Input } from './ui/input'
-// import { getImageData } from 'lib/utils';
+import { useEffect, useState } from 'react'
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
+import { Input } from './ui/input'
+import { getImageData } from 'lib/utils'
+import { Label } from './ui/label'
+import { vCard } from './CellColumns'
+import { useBase64ImageStore } from 'lib/useStore'
 
-// function UploadImage() {
-//   // const [preview, setPreview] = useState("");
-//   // const [base64, setBase64] = useState<SetStateAction<string>>("");
-  
-//   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-//     console.log(e.target.files)
-//     // const file = e.target.files?.[0];
-//     // if (file) {
-//     //   const { displayUrl, base64 } = await getImageData(e.target.files?.[0]);
-//     //   setPreview(displayUrl);
-//     //   setBase64(base64 as string);
-//     // }
-//   }
+type Props = {
+  data: vCard
+}
+function UploadImage({ data }: Props) {
+  const [previews, setPreviews] = useState<string[]>([])
+  const [base64s, setBase64s] = useState<{ [key: number]: string }>({});
+  const { setBase64Image } = useBase64ImageStore()
 
-//   // console.log(base64)
 
-//   return (
-//     <div className="flex items-center">
-//       <Input type="file"
+  useEffect(() => {
+    setBase64Image(Number(data.id), base64s[Number(data.id)])
+  }, [base64s, data.id, setBase64Image]);
 
-//         onChange={handleUpload}
-//         // onChange={async (e) => {
-//         //   const file = e.target.files?.[0];
-//         //   if (file) {
-//         //     const { displayUrl, base64 } = await getImageData(e.target.files?.[0]);
-//         //     setPreview(displayUrl);
-//         //     setBase64(base64 as string);
-//         //   }
-//         // }}
+  const handleUpload = async (event: React.ChangeEvent<HTMLInputElement>, index: string) => {
+    const { displayUrl, base64 } = await getImageData(event);
 
-//       />
-//       <Avatar className="w-32 h-32 mt-10 mb-10 ">
-//         {/* <AvatarImage src={preview} /> */}
-//         <AvatarFallback>Image</AvatarFallback>
-//       </Avatar>
-//     </div>
-//   )
-// }
+    // Update the corresponding preview and base64 arrays
+    setPreviews((prevPreviews) => {
+      const updatedPreviews = prevPreviews ? [...prevPreviews] : [];
+      updatedPreviews[Number(index)] = displayUrl;
+      return updatedPreviews;
+    });
 
-// export default UploadImage
+    setBase64s((prevBase64s) => {
+      const updatedBase64s = { ...prevBase64s };
+      updatedBase64s[Number(index)] = base64 as string;
+      return updatedBase64s;
+    });
+  };
+
+  const handleAvatarClick = (index: string) => {
+    document.getElementById(`fileInput${index}`)?.click();
+  };
+
+
+  return (
+    <div key={data.id} className='flex items-center'>
+      <Input
+        type='file'
+        id={`fileInput${data.id}`}
+        onChange={(event) => handleUpload(event, data.id)}
+        style={{ display: 'none' }}
+      />
+      {previews[Number(data.id)] ? (
+        <Avatar
+          className='w-20 h-20 flex items-center justify-center cursor-pointer'
+          onClick={() => handleAvatarClick(data.id)}
+        >
+          <AvatarImage src={previews[Number(data.id)]} />
+          <AvatarFallback>Image</AvatarFallback>
+        </Avatar>
+      ) : (
+        <Label
+          htmlFor={`fileInput${data.id}`}
+          className='cursor-pointer border rounded-full text-center flex items-center w-28 h-12 mr-2'
+        >
+          Upload Image
+        </Label>
+      )}
+    </div>
+  )
+}
+
+export default UploadImage
+
