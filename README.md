@@ -63,3 +63,10 @@ This project follows a specific structure to keep everything organized. Here's a
 - `tsconfig.json`, `tsconfig.node.json`: These files are for configuring the TypeScript compiler.
 
 - `vite.config.ts`: This file is for configuring Vite, the build tool used in this project.
+
+
+
+# Branches 
+   - main: This branch contains the latest version of the source code, which is automatically deployed to production.
+   - dev: This branch contains the latest version of the source code, which is automatically deployed to staging.
+   - feature/xxx: This branch contains the source code for a specific feature. When the feature is complete, it is merged into the dev branch.
