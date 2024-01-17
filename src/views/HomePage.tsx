@@ -121,7 +121,7 @@ function HomePage() {
         </NavLink>
       </div>
 
-     <div className=" flex flex-row">
+     <div className=" flex flex-col md:flex-row">
      <FormCard inputFields={inputFields} />
       <FormCardWithOutPhoto inputFields={inputFieldsWithOutPhoto} />
      </div>

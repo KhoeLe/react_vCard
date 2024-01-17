@@ -43,7 +43,7 @@ function GenerateList() {
 
       <UploadForm onFileImported={handleImport} />
 
-      <div >
+      <div  className="mb-24">
         <div className="information">
           <h1 className="mt-2 mb-2 px-2 py-2 text-3xl font-sans text-indigo-500 ">vCard List</h1>
           <p className="mt-2 mb-2 px-2 py-2 font-sans text-sm">The table displays a list of v-Cards. You can generate individual profiles as needed. For instance, you can download an Excel file, upload it to the system, and then generate QR codes. </p>
