@@ -6,7 +6,7 @@ import { Button } from "@components/ui/button";
 import { useState } from "react";
 import { read, utils } from 'xlsx';
 
-function AdminPage() {
+function GenerateList() {
 
   const [fileValue, setFileValue] = useState<vCard[]>('' as unknown as vCard[])
 
@@ -59,4 +59,4 @@ function AdminPage() {
   )
 }
 
-export default AdminPage
+export default GenerateList

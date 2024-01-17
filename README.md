@@ -16,17 +16,12 @@
    ```bash
    # install dependencies
    npm install
-   # serve with hot reload at (http://localhost:5173/business-card/CreateVCardWithPhoto.htm)
+   # serve with hot reload at (http://localhost:5173/)
    npm run dev
 
    # build for production with minification
    npm run build
-   
-   # After build, U can open file (dist/index.html) and change (dist/index.html) to (dist/business-card/CreateVCardWithPhoto.htm) 
-   # and open file (dist/business-card/CreateVCardWithPhoto.htm)  and need to modify 'CreateVCardWithPhoto.htm' to ' <link rel="icon" type="image/svg+xml" href="/business-card/assets/logo.svg" /> '
-   # and open file (dist/business-card/CreateVCardWithPhoto.htm)  and need to modify 'CreateVCardWithPhoto.htm' to ' <script type="module" src="/business-card/assets/js/.....js"></script> '
-   # and open file (dist/business-card/CreateVCardWithPhoto.htm)  and need to modify 'CreateVCardWithPhoto.htm' to ' <link rel="stylesheet" href="/business-card/assets/css/.....css" /> '
-   ```
+
 
 # Project Structure
 

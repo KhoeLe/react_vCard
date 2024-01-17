@@ -1,7 +1,8 @@
 import FormCard from "@components/FormCard"
 import FormCardWithOutPhoto from "@components/FormCardWithOutPhoto"
-// import { Button } from "@components/ui/button"
-// import { NavLink } from "react-router-dom"
+import { Button } from "@components/ui/button"
+import { NavLink } from "react-router-dom"
+
 
 function HomePage() {
   const inputFields = [
@@ -112,13 +113,13 @@ function HomePage() {
 
   return (
     <div className="container mx-auto">
-      {/* <div className="flex flex-row-reverse mt-2 mb-2">
-        <NavLink to='/admin-page.htm'>
+      <div className="flex flex-row-reverse mt-2 mb-2">
+        <NavLink to='/generate-list'>
           <Button>
-            Admin Page
+            Generate List
           </Button>
         </NavLink>
-      </div> */}
+      </div>
 
      <div className=" flex flex-row">
      <FormCard inputFields={inputFields} />
