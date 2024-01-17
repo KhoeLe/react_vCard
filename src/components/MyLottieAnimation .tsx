@@ -6,7 +6,7 @@ function MyLottieAnimation() {
       loop
       animationData={animationData}
       play
-      style={{ width: 600, height: 300 }}
+    
     />
   )
 }
