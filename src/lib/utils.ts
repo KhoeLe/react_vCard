@@ -54,7 +54,7 @@ export function getVCardData(
   mobilePhone: string,
   email: string,
   noWrapbusinessTitle: string,
-  base64: string,
+  base64 : string,
   workPhone: string,
   companyWebsite: string,
   companyName: string,

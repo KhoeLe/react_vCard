@@ -9,8 +9,7 @@ import { Toaster } from '@components/ui/toaster.tsx'
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <Suspense fallback={ <BeatLoader color='#10B981' size={24} />}>
-      <BrowserRouter basename='/business-card/CreateVCardWithPhoto.htm'>
-      {/* <BrowserRouter > */}
+      <BrowserRouter >
         <Toaster />
           <App />
       </BrowserRouter>

@@ -29,6 +29,8 @@ function ShowQr({ email_, sizeColor, sizeQr, qrCodeValue, style }: Props) {
       });
   }
 
+  const valueSupportUTF8  = unescape(encodeURIComponent(qrCodeValue))
+
   return (
     <div className={`flex ${style} justify-center`}>
       {qrCodeValue ? (
@@ -37,7 +39,7 @@ function ShowQr({ email_, sizeColor, sizeQr, qrCodeValue, style }: Props) {
             <QRCode
               id="QRCodeScaled"
               size={Number(sizeQr)}
-              value={qrCodeValue}
+              value={valueSupportUTF8}
               fgColor={sizeColor}
               ref={qrCodeRef}
             />

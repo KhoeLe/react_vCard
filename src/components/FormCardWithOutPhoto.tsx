@@ -11,11 +11,9 @@ import {
 } from './ui/form'
 import { Input } from './ui/input'
 import { Button } from "./ui/button"
-import { SetStateAction, useState } from "react"
+import { useState } from "react"
 import { Textarea } from "./ui/textarea"
-import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE, getImageData, getVCardData, phoneRegex, uploadedToAzure } from "lib/utils"
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
-import { ContainerClient } from "@azure/storage-blob"
+import { getVCardData, phoneRegex,  } from "lib/utils"
 import ShowQr from "./ShowQr"
 import BeatLoader from 'react-spinners/BeatLoader'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select"
@@ -32,13 +30,6 @@ type Props = {
 
 const formSchema = z.object({
   fullName: z.string().min(2).max(50),
-  image: z
-    .any()
-    .refine((file) => file[0]?.size <= MAX_FILE_SIZE, `Max image size is 10MB.`)
-    .refine(
-      (file) => ACCEPTED_IMAGE_TYPES.includes(file[0]?.type),
-      "Only .jpg, .jpeg, .png and formats are supported."
-    ),
   businessTitle: z.string().min(2).max(100),
   email: z.string().email(),
   mobilePhone: z.string().regex(phoneRegex, 'Invalid Number!'),
@@ -55,16 +46,14 @@ const formSchema = z.object({
 });
 
 type FormValues = z.infer<typeof formSchema>;
-type InputFieldId = "fullName" | "image" | "businessTitle" | "email" | "mobilePhone" | "workPhone" | "companyName" | "companyWebsite" | "sizeQr" | "sizeColor";
+type InputFieldId = "fullName" | "businessTitle" | "email" | "mobilePhone" | "workPhone" | "companyName" | "companyWebsite" | "sizeQr" | "sizeColor";
 
 
 
-function FormCard({ inputFields }: Props) {
+function FormCardWithOutPhoto({ inputFields }: Props) {
 
   const [isLoading, setIsLoading] = useState(false)
   const [saving, setSaving] = useState(false)
-  const [preview, setPreview] = useState("");
-  const [base64, setBase64] = useState<SetStateAction<string>>("");
   const [state, setState] = useState({
     sizeQr: "100",
     sizeColor: "#e8072a",
@@ -78,7 +67,6 @@ function FormCard({ inputFields }: Props) {
     resolver: zodResolver(formSchema),
     defaultValues: {
       fullName: "",
-      image: "",
       businessTitle: "",
       email: "",
       mobilePhone: "",
@@ -97,41 +85,40 @@ function FormCard({ inputFields }: Props) {
       setSaving(true)
       setIsLoading(true)
       // Do something with the form values.
-      const base64Image = base64.toString().split(',')[1];
 
       const noWrapbusinessTitle = values.businessTitle.replace(/\n/g, "\\n");
       // build the vCard and get url
-      if (base64Image) {
-        const vCard = getVCardData(
-          values.fullName,
-          values.mobilePhone,
-          values.email,
-          noWrapbusinessTitle,
-          base64Image,
-          values.workPhone?.toString() || "",
-          values.companyWebsite,
-          values.companyName
-        );
+
+      const vCard = getVCardData(
+        values.fullName,
+        values.mobilePhone,
+        values.email,
+        noWrapbusinessTitle,
+        "",
+        values.workPhone?.toString() || "",
+        values.companyWebsite,
+        values.companyName
+      );
 
 
-        const { fileUrl } = await uploadedToAzure(vCard, `${values.email}.vcf`) as { containerClient: ContainerClient; fileUrl: string };
-        setState((prevState) => ({
-          ...prevState, email_: values.email, qrCodeValue: fileUrl,
-          sizeQr: values.sizeQr,
-          sizeColor: values.sizeColor
-        }));
-        toast({
-          variant: "success",
-          title: "Generate Success",
-          description: "We've created a QR code",
-        })
+      // const { fileUrl } = await uploadedToAzure(vCard, `${values.email}.vcf`) as { containerClient: ContainerClient; fileUrl: string };
+      setState((prevState) => ({
+        ...prevState, email_: values.email, qrCodeValue: vCard,
+        sizeQr: values.sizeQr,
+        sizeColor: values.sizeColor
+      }));
+      toast({
+        variant: "success",
+        title: "Generate Success",
+        description: "We've created a QR code",
+      })
 
 
-        setIsLoading(false)
-        setSaving(false)
-        window.scrollTo(0, 0)
+      setIsLoading(false)
+      setSaving(false)
+      window.scrollTo(0, 0)
 
-      }
+
     } catch (error) {
       toast({
         variant: "destructive",
@@ -144,26 +131,17 @@ function FormCard({ inputFields }: Props) {
 
 
   return (
-    <div className='flex flex-col-reverse align-center justify-center m-auto md:max-w-4xl md:flex-row mb-10'>
-      <div className='w-full md:w-2/3 mr-24 mb-25 px-4'>
+    <div className='flex flex-col-reverse align-center justify-center  md:max-w-4xl md:flex-row '>
+      <div className='w-full md:w-2/3 mr-24  px-4'>
         <p>
-          Please fill in the information below to generate a QR Code with Photo and download the image.
+          Please fill in the information below to generate a QR Code without Photo and download the image.
         </p>
         <div>
           <div>
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                 <fieldset disabled={saving}>
-                  <>
-                  {preview 
-                              ?  
-                  <Avatar className="w-32 h-32 mt-10 mb-10 ">
-                      <AvatarImage src={preview} />
-                      <AvatarFallback>Image</AvatarFallback>
-                  </Avatar>   : 
-                    ''
-                  }
-                  </>
+
                   {inputFields.map((input) => (
                     <div key={input.id} className={`${input.type === "hidden" ? 'hidden' : ''} mt-5 mb-5`}>
                       <FormField
@@ -181,17 +159,6 @@ function FormCard({ inputFields }: Props) {
                                     }
                                   } {...rest}
                                   />
-                                  : input.type === "file"
-                                    ? <Input type="file"
-                                      {...rest}
-                                      onChange={async (event) => {
-                                        const { files, displayUrl, base64 } = await getImageData(event)
-                                        setPreview(displayUrl);
-                                        setBase64(base64 as string);
-                                        onChange(files, base64);
-
-                                      }}
-                                    />
                                     : input.type === "selectSize"
                                       ? <Select onValueChange={onChange} defaultValue={value}>
                                         <FormControl>
@@ -252,4 +219,4 @@ function FormCard({ inputFields }: Props) {
   )
 }
 
-export default FormCard
+export default FormCardWithOutPhoto
