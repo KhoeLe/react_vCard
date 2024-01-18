@@ -9,7 +9,7 @@ import { ThemeProvider } from '@components/ui/theme-provider.tsx'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <ThemeProvider defaultTheme='dark' storageKey='vite-ui-theme'>
+    <ThemeProvider defaultTheme='system' storageKey='vite-ui-theme'>
       <Suspense fallback={<BeatLoader color='#10B981' size={24} />}>
         <BrowserRouter>
           <Toaster />
