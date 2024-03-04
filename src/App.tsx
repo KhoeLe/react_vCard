@@ -17,6 +17,8 @@ function App() {
         <Route path='/' element={<HomePage />} />
         <Route path='/generate-list' element={<AdminPage />} />
         {/* <Route path='/card-visual/:id' element={<CardVisual />} /> */}
+
+        
       </Routes> 
       <Footer />
   </div>
