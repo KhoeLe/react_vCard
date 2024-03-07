@@ -112,20 +112,23 @@ function HomePage() {
   ]
 
   return (
-    <div className="container mx-auto">
-      <div className="flex flex-row-reverse mt-2 mb-2">
-        <NavLink to='/generate-list'>
-          <Button>
-            Generate List
-          </Button>
-        </NavLink>
-      </div>
+    <div className="container  mx-auto">
 
-     <div className=" flex flex-col md:flex-row">
-     <FormCard inputFields={inputFields} />
-      <FormCardWithOutPhoto inputFields={inputFieldsWithOutPhoto} />
-     </div>
+        <div className="flex flex-row-reverse mt-2 mb-2">
+          <NavLink to='/generate-list'>
+            <Button>
+              Generate List
+            </Button>
+          </NavLink>
+        </div>
+
+        <div className=" flex flex-col md:flex-row">
+          <FormCard inputFields={inputFields} />
+          <FormCardWithOutPhoto inputFields={inputFieldsWithOutPhoto} />
+        </div>
+
     </div>
+
   )
 }
 

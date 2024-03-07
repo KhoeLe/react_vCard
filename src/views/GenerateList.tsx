@@ -32,7 +32,7 @@ function GenerateList() {
   }
 
   return (
-    <div className="container mx-auto">
+    <div className="container w-full max-h-screen max-w-4xl mx-auto">
       <div className="flex flex-row-reverse mt-2 mb-2">
         <NavLink to='/'>
           <Button>

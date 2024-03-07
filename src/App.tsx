@@ -11,8 +11,9 @@ function App() {
 
   return (
 
-    <div>
+    <div >
       <Header />
+
         <Routes>
         <Route path='/' element={<HomePage />} />
         <Route path='/generate-list' element={<AdminPage />} />
