@@ -7,6 +7,7 @@ import {
   useSpring,
 } from "framer-motion";
 import { cn } from "lib/utils";
+import { useLocation } from "react-router-dom";
 
 export const TracingBeam = ({
   children,
@@ -15,6 +16,9 @@ export const TracingBeam = ({
   children: React.ReactNode;
   className?: string;
 }) => {
+  
+  const location  = useLocation();
+
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -30,7 +34,7 @@ export const TracingBeam = ({
     }
 
 
-  }, []);
+  }, [location]);
 
   const y1 = useSpring(
     useTransform(scrollYProgress, [0, 0.5], [50, svgHeight]),
