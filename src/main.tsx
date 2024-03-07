@@ -6,7 +6,6 @@ import { BrowserRouter } from 'react-router-dom'
 import BeatLoader from 'react-spinners/BeatLoader'
 import { Toaster } from '@components/ui/toaster.tsx'
 import { ThemeProvider } from '@components/ui/theme-provider.tsx'
-import GridSmallBackground from '@components/GridSmallBackground.tsx'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
